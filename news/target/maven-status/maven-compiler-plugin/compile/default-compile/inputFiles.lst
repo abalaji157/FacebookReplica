@@ -1,0 +1,10 @@
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/livy/SocialRankJob.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/storage/DynamoConnector.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/config/Config.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/ComputeRanks.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/LoadNews.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/livy/MyPair.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/WriteArticles.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/Article.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/hw3/livy/ComputeRanksLivy.java
+/home/nets2120/G25/facebook/news/src/main/java/edu/upenn/cis/nets2120/storage/SparkConnector.java
