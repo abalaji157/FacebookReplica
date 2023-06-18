@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    /* default padding and color */
+    body {
+    padding-top: 13px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 13px;
+    }
+    form label {
+      font-weight:normal
+    }
+    .login-box {
+    max-width: 330px;
+    margin: 10 auto;
+    }
+    /* create a class for the future */
+    .login-box .form-control {
+    margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <%if (message && message != null) { %>
+    <font color="red"><%= message %><p>
+  <% } %>
+  <font color="black">
+  <div class = 'container'>
+    <div>
+      <h1>Update your account</h1>
+      <h3>Hello <%=user%>!</h3>
+    </div>
+    <div>
+      <form action="/updateaccount" method="post" class="form-horizontal">
+        <label for="opw">Password Changes:</label><br>
+        <input type="text" id = opw name="opw" placeholder="Old Password" class = 'form-control'>
+        <input type="text" id = npw name="npw" placeholder="New Password" class = 'form-control'>
+        <br>
+        <label for="email">Email Changes:</label><br>
+        <input type="text" id= email name="email" placeholder="New email" class = 'form-control' value = <%=emailVal%>>
+        <br>
+        <label for="affiliation">Affiliation Changes:</label><br>
+        <input type="text" id = affiliation name="affiliation" placeholder="New affiliation" class = 'form-control' value = <%=affiliationVal%>>
+        <br>
+        <br>
+        <p><b>Would you like to change your news preferences? Check new categories (at least 2).</b></p>
+        <div class="container mb-3">
+          <select class="select" style="width: 300px; height: 250px;" name="Interest" multiple>
+              <option value="Entertainment" name="Interest">Entertainment</option>
+              <option value="Crime" name="Interest">Crime</option>
+              <option value="Black Voices" name="Interest">Black Voices</option>
+              <option value="Queer Voices" name="Interest">Queer Voices</option>
+              <option value="World News" name="Interest">World News</option>
+              <option value="Politics" name="Interest">Politics</option>
+              <option value="Weird News" name="Interest">Weird News</option>
+              <option value="Women" name="Interest">Women</option>
+              <option value="Comedy" name="Interest">Comedy</option>
+              <option value="Media" name="Interest">Media</option>
+              <option value="Religion" name="Interest">Religion</option>
+              <option value="Tech" name="Interest">Tech</option>
+              <option value="Sports" name="Interest">Sports</option>
+              <option value="Impact" name="Interest">Impact</option>
+              <option value="Travel" name="Interest">Travel</option>
+              <option value="Healthy Living" name="Interest">Healthy Living</option>
+              <option value="College" name="Interest">College</option>
+              <option value="Parents" name="Interest">Parents</option>
+              <option value="Arts" name="Interest">Arts</option>
+              <option value="Style" name="Interest">Style</option>
+              <option value="Taste" name="Interest">Taste</option>
+              <option value="Green" name="Interest">Green</option>
+              <option value="World Post" name="Interest">World Post</option>
+              <option value="Business" name="Interest">Business</option>
+              <option value="Wellness" name="Interest">Wellness</option>
+              <option value="Style & Beauty" name="Interest">Style & Beauty</option>
+              <option value="Parenting" name="Interest">Parenting</option>
+              <option value="Food & Drink" name="Interest">Food & Drink</option>
+              <option value="Money" name="Interest">Money</option>
+              <option value="Divorce" name="Interest">Divorce</option>
+              <option value="Home & Living" name="Interest">Home & Living</option>
+              <option value="Weddings" name="Interest">Weddings</option>
+              <option value="Tech" name="Interest">Tech</option>
+              <option value="Culture & Arts" name="Interest">Culture & Arts</option>
+          
+            </select>
+      </div>
+        <!-- <div class="d-flex justify-content-center">
+          <div class="row justify-content-center"> -->
+            <!-- <div class="col-sm-3">
+              <input type="checkbox" id="Entertainment" name="Interest" value="Entertainment">
+              <label for="Entertainment">Entertainment</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Crime" name="Interest" value="Crime">
+              <label for="Crime">Crime</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="World News" name="Interest" value="World News">
+              <label for="World News">World News</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Impact" name="Interest" value="Impact">
+              <label for="Impact">Impact</label>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm-3">
+              <input type="checkbox" id="Politics" name="Interest" value="Politics">
+              <label for="Politics">Politics</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Weird News" name="Interest" value="Wierd News">
+              <label for="Weird News">Weird News</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Black Voices" name="Interest" value="Black Voices">
+              <label for="Black Voices">Black Voices</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Women" name="Interest" value="Women">
+              <label for="Women">Women</label>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm-3">
+              <input type="checkbox" id="Comedy" name="Interest" value="Comedy">
+              <label for="Comedy">Comedy</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Queer Voices" name="Interest" value="Queer Voices">
+              <label for="Queer Voices">Queer Voices</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Sports" name="Interest" value="Sports">
+              <label for="Sports">Sports</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Business" name="Interest" value="Business">
+              <label for="Business">Business</label>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm-3">
+              <input type="checkbox" id="Travel" name="Interest" value="Travel">
+              <label for="Travel">Travel</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Media" name="Interest" value="Media">
+              <label for="Media">Media</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Tech" name="Interest" value="Tech">
+              <label for="Tech">Tech</label>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" id="Religion" name="Interest" value="Religion">
+              <label for="Religion">Religion</label>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm-3">
+              <input type="checkbox" id="Science" name="Interest" value="Science">
+              <label for="Science">Science</label>
+            </div>
+          </div> -->
+        <!-- </div> -->
+        <input type = "submit" value = "Save changes" class = 'btn btn-sm btn-primary btn-block'>
+      </form>
+      <br>
+      <form action="/home" method="get">
+        <h2></h2>
+        <input type = "submit" value = "Return to homepage" class = 'btn btn-sm btn-primary btn-block'>
+      </form>
+      <br>
+      </div>
+  </div>
+    <br>
+</body>
+</html>

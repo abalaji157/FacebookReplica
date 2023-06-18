@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <%if (message && message != null) { %>
+  <font color="red"><%= message %><p>
+  <% } %>
+  <font color="black">
+    <h1>Login Page</h1>
+    <form action="/checkLogin" method="post">
+      <input type="text" name="myInputFieldU" placeholder="Username">
+      <input type="text" name="myInputFieldP" placeholder="Password">
+      <input type="submit" value="Login">
+    </form>
+    <form action="/signup" method="get">
+      <h5>If you don't have an account, sign up below:</h5>
+      <input type="submit" value="Sign up">
+    </form>
+    <br>
+</body>
+</html>

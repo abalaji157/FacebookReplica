@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    /* default padding and color */
+    body {
+      padding-top: 40px;
+      padding-left: 25px;
+      padding-right: 25px;
+      padding-bottom: 40px;
+    }
+
+    form label {
+      font-weight: normal
+    }
+
+    .login-box {
+      max-width: 330px;
+      margin: 10 auto;
+    }
+
+    /* create a class for the future */
+    .login-box .form-control {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <font color="black">
+    <h1>Create New Account</h1>
+    <br>
+    <form action="/createaccount" method="post" class=form-horizontal>
+      <input type="text" name="myInputFieldFN" placeholder="First Name" class=form-control>
+      <br>
+      <input type="text" name="myInputFieldLN" placeholder="Last Name" class=form-control>
+      <br>
+      <input type="text" name="myInputFieldU" placeholder="Username" class=form-control>
+      <br>
+      <input type="text" name="myInputFieldP" placeholder="Password" class=form-control>
+      <br>
+      <input type="text" name="myInputFieldE" placeholder="Email" class=form-control>
+      <br>
+      <input type="text" name="myInputFieldB" placeholder="Birthday (MM/DD/YYYY)" class=form-control>
+      <br>
+      <input type="text" name="myInputFieldA" placeholder="Affiliation (Penn, ...)" class=form-control>
+      <br> <br>
+      <p><b>Check the news fields you are interested in (please enter at least 2):</b></p>
+      <div class="d-flex justify-content-center">
+        <div class="row justify-content-center">
+          <div class="col-sm-3">
+            <input type="checkbox" id="Entertainment" name="Interest" value="Entertainment">
+            <label for="Entertainment">Entertainment</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Crime" name="Interest" value="Crime">
+            <label for="Crime">Crime</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="World News" name="Interest" value="World News">
+            <label for="World News">World News</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Impact" name="Interest" value="Impact">
+            <label for="Impact">Impact</label>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-sm-3">
+            <input type="checkbox" id="Politics" name="Interest" value="Politics">
+            <label for="Politics">Politics</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Weird News" name="Interest" value="Wierd News">
+            <label for="Weird News">Weird News</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Black Voices" name="Interest" value="Black Voices">
+            <label for="Black Voices">Black Voices</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Women" name="Interest" value="Women">
+            <label for="Women">Women</label>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-sm-3">
+            <input type="checkbox" id="Comedy" name="Interest" value="Comedy">
+            <label for="Comedy">Comedy</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Queer Voices" name="Interest" value="Queer Voices">
+            <label for="Queer Voices">Queer Voices</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Sports" name="Interest" value="Sports">
+            <label for="Sports">Sports</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Business" name="Interest" value="Business">
+            <label for="Business">Business</label>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-sm-3">
+            <input type="checkbox" id="Travel" name="Interest" value="Travel">
+            <label for="Travel">Travel</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Media" name="Interest" value="Media">
+            <label for="Media">Media</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Tech" name="Interest" value="Tech">
+            <label for="Tech">Tech</label>
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Religion" name="Interest" value="Religion">
+            <label for="Religion">Religion</label>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-sm-3">
+            <input type="checkbox" id="Science" name="Interest" value="Science">
+            <label for="Science">Science</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <input type="submit" value="Create" class='btn btn-sm btn-primary btn-block'>
+    </form>
+    <br>
+    <%if (message && message !=null) { %>
+      <font color="red">
+        <%= message %>
+          <p>
+            <% } %>
+</body>
+
+</html>

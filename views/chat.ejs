@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 160; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; left: 160}
+      #input:focus { outline: none; }
+      #form > button { background: rgb(205, 40, 156); border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: rgb(35, 33, 32); }
+      /* #sidebar {height: 100%; 
+                width: 100px; 
+                position: fixed; 
+                z-index: 1; 
+                top: 0; 
+                left: 0;
+                background-color: rgb(56, 79, 27); 
+                padding-top: 20px;} */
+      #messages { list-style-type: none; margin-left: 160px; padding: 0; top: 0; left: 160px}
+      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li:nth-child(odd) { background: #efefef; }
+      #leave { background: rgba(160, 54, 54, 0.15); position: absolute; padding: 0.25rem; width: 250; bottom: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+      /* #modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: #ffffff;
+          padding-top: 50px;
+          border-bottom:0ch;
+      } */
+      
+    </style>
+
+
+  </head>
+  <body>
+
+    
+
+    <!-- <ul id = "sidebar"></ul> -->
+    <!-- <div id="modal" style="display: none">
+      <form action = "/addFriend" method = "post">
+        <label for="my-input">Add Friend: </label>
+        <input type="text" id="my-input" />
+        <button type="submit">Submit</button>
+      </form>
+    </div> -->
+
+    <h1>Members: <%- members -%></h1>
+    <ul id="messages"></ul>
+    <form action = "/addGroupInvite" method = "post">
+      <input type="text" name="friend" placeholder="Add Friend">
+      <input type="hidden" name = "test" value = "tester">
+      <input type="hidden" name = "chatMembers" value = '<%= members %>'>
+      <input type="hidden" name = "sender" value = '<%=username %>'>
+      <input type="hidden" name = "chatID" value = '<%=id%>'>
+      <input type="submit" value="Request">
+    </form>
+
+    <form id="form" action="/chatHome" method = "get">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <form action = "/chatHome" method = "get">
+      <button type = "submit">Chat Home</button>
+    </form>
+    <form action = "/leavechat" method = "post">
+      <button type = "submit" name = "user" value = '<%= username %>,<%=id%>' >Leave Chat</button>
+    </form>
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+
+  var socket = io();
+  var username = '<%= username %>';
+  var id = '<%= id %>';
+  var currentMessages = []; 
+  var members = []; 
+  
+
+  const button = document.querySelector('#add');
+  const modal = document.querySelector('#modal');
+
+
+
+
+  $.getJSON('/loadmessages?id='+id, function(items) {
+    
+    for (item of items) {
+      console.log('item: ' + item)
+      currentMessages.push(item);
+      console.log(currentMessages.length)
+      console.log(item);
+      var cur = document.createElement('li');
+      cur.textContent = item; 
+      messages.appendChild(cur);
+    }
+  });
+
+  
+
+  var form = document.getElementById("form");
+  var input = document.getElementById('input');
+
+
+  form.addEventListener('submit', function(e) {
+    console.log('submit reached');
+    e.preventDefault();
+    if (input.value) {
+      var params = {
+      chatID: id, 
+      user: username, 
+      message: input.value
+      
+    }; 
+      var members = '<%- members -%>';
+      members = members.split(',');
+      console.log('membershere');
+      console.log(members);
+      var msg = input.value;
+      var curID = id; 
+      console.log('submit');
+      if (members.includes(username)) {
+        $.post('/addmessage', JSON.stringify(params));
+      }
+      socket.emit('chat message', {members, msg, curID});
+      input.value = '';
+    }
+  });
+  
+  socket.on("curUsers", (users) => {
+    users.forEach((user) => {
+        sidebar.appendChild('user online');
+    })
+  });
+  
+  socket.on('chat message', function({msg, members, curID}) {
+    console.log(members);
+    console.log(username);
+    console.log(curID);
+    console.log(id);
+    console.log(members.includes(username));
+    if (members.includes(username) && id == curID) {
+    var item = document.createElement('li');
+    item.textContent = msg; 
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+    }
+  });
+</script>
+
+  </body>
+</html>

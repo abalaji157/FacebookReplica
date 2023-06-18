@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Homepage</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link type="text/css" rel="stylesheet" href="../css/mdb.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <style>
+    .bg-light {
+      background-color: #f0f2f5 !important;
+    }
+
+    .container {
+      max-width: 1140px;
+    }
+  </style>
+  
+  <!-- Visualizer style files -->
+  <!-- CSS Files -->
+  <link type="text/css" href="../css/base.css" rel="stylesheet" />
+
+  <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!-- JIT Library File -->
+  <script language="javascript" type="text/javascript" src="../js/jit.js"></script>
+
+  <!-- Example File -->
+  <script language="javascript" type="text/javascript" src="../js/friendvisualizer.js"></script>
+</head>
+
+<body class="bg-light">
+  <div id="posts" style="display: none;"><%= JSON.stringify(posts) %></div>
+  <div id="user" style="display: none;"><%= JSON.stringify(user) %></div>
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-5">
+      <!-- Container wrapper -->
+      <div class="container-fluid justify-content-between">
+        <!-- Left elements-->
+        <div class="d-flex">
+          <a class="navbar-brand" href="#">
+            <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" height="30" alt="Facebook Logo"
+              loading="lazy" />
+          </a>
+
+          <form autocomplete="off" action="/search" method="get">
+          <div class="input-group">
+            <input type="text" id="search" name="userSearch" class="form-control rounded" placeholder="Search" aria-label="Search"
+              aria-describedby="search-addon" onKeyUp="showUsers(this.value)" />
+            <span class="input-group-text border-0" id="search-addon"><i class="fas fa-search"></i></span>
+            <button type="submit" value="Submit"> </button>
+            <div id= "searchbox"> </div>
+          </div>
+          </form>
+        </div>
+
+        <script type="text/javascript">
+        
+          function showUsers(searchTerm) {
+            box = document.getElementById("searchbox")
+            box.innerHTML = ""
+            if (searchTerm == "") {
+              return
+            }
+            var result = ""
+            fetch('/match?search=' + searchTerm).then(
+              function(res) {
+                return res.json()
+              }
+            ).then(function (arr) {
+              for (let i = 0; i < arr.length; i++) {
+                result += '<li>' + arr[i] + '</li>'
+              }
+              box.innerHTML = '<ul>' + result + '</ul>'
+              return true;
+            }).catch(function(err) {
+              console.log("error with match")
+              return false
+            })
+            box.onclick = function (click) {
+              const populate = click.target.innerText;
+              const search = document.getElementById("search")
+              search.value = populate;
+              this.innerHTML = "";
+            };
+          }
+
+        </script>
+
+        <!-- Right elements-->
+        <div>
+          <div class="container-fluid">
+            <ul class="navbar-nav d-flex flex-row">
+              <!-- Icons -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
+                  role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"
+                    height="25" alt="Profile image" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li>
+                    <a class="dropdown-item" href="/updatepage">My profile</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-comment fa-lg"></i>
+                </a>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-users fa-lg"></i>
+                  <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+
+  <main>
+    <!-- Section: White background -->
+    <section class="bg-white mb-4 shadow-2">
+      <div class="container">
+        <!-- Section: Images -->
+        <section class="mb-5">
+          <!-- Background image -->
+          <div id="intro-example" class="p-5 text-center bg-image shadow-1-strong rounded-bottom"
+            style="background-image: url('https://s3.amazonaws.com/g25.profile.images/background_default.png'); height: 400px;">
+          </div>
+
+          <!-- Profile picture -->
+          <div class="d-flex justify-content-center">
+            <img src="https://s3.amazonaws.com/g25.profile.images/default_pfp.jpeg" alt=""
+              class="rounded-circle shadow-3-strong position-absolute" style="width: 168px; margin-top: -140px">
+          </div>
+        </section>
+        <!-- Section: Images -->
+
+        <!-- Section: User data -->
+        <section class="text-center border-bottom">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+              <h2><strong><%= user.firstname.S + " " + user.lastname.S %></strong></h2>
+            </div>
+          </div>
+
+        </section>
+        <!-- Section: User data -->
+
+        <!-- Section: Buttons -->
+        <section class="py-3 d-flex justify-content-between align-items-center">
+          <!-- left elements -->
+          <div id="left-buttons">
+            <button type="button" id="homepage-btn" onclick="location.href = '/home';" class="btn btn-link text-reset" data-mdb-ripple-color="dark">Homepage</button>
+            <button type="button" id="wall-btn" onclick="location.href = '/wall';" class="btn btn-link bg-light" data-mdb-ripple-color="dark">Wall</button>
+            <button type="button" id="news-btn" onclick="location.href = '/getnewspage';" class="btn btn-link text-reset" data-mdb-ripple-color="dark">News</button>
+            <button type="button" id="friends-btn" onclick="location.href = '/friends';" class="btn btn-link text-reset" data-mdb-ripple-color="dark">Friends <small
+                class="text-muted">1425</small></button>
+          </div>
+
+          <!-- Right elements -->
+          <div>
+            <form action="/updatepage">
+              <button type="submit" class="btn btn-light px-3 bg-light mr-2" data-ripple-color="dark"><i
+                class="fas fa-edit mr-1"></i>Edit profile</button>
+            </form>
+            
+          </div>
+        </section>
+        <!-- Section: Buttons -->
+      </div>
+    </section>
+    <!-- Section: White background -->
+
+    <!-- Section: Homepage -->
+    <section id="homepage-section" class="mb-4">
+      <div class="container">
+        <div class="row gx-lg-5">
+
+          <div class="col-md-5 mb-5 mb-lg-0">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><strong>Intro</strong></h5>
+                <ul class="list-unstyled text-muted">
+                  <li><i class="fas fa-user mr-3 mb-3"></i> <%= user.firstname.S + " " + user.lastname.S %></li>
+                  <li><i class="fas fa-envelope mr-3 mb-3"></i> <%= user.email.S %></li>
+                  <li><i class="fas fa-birthday-cake mr-3 mb-3"></i> <%= user.dob.S %></li>
+                  <li><i class="fas fa-graduation-cap mr-3 mb-3"></i> <%= user.affiliation.S %></li>
+                  <li><i class="fas fa-newspaper mr-3 mb-3"></i> Interests</li>
+                </ul>
+                <% for(var i=0; i < user.interests.SS.length; i++) { %>
+                  <button type="button" class="btn btn-outline-primary btn-rounded mb-2" data-mdb-ripple-color="dark" disabled><%= user.interests.SS[i] %></button>
+                <% } %>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 mb-5 mb-lg-0">
+
+            <!-- Post Modal -->
+            <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Post a status update</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div>
+                      <div class="form-outline" style="width: 470px;">
+                        <textarea class="form-control" id="postTextArea" rows="2"></textarea>
+                        <label class="form-label" for="postTextArea">Write a status update</label>
+						<textarea class="form-control" id="wallTextArea" rows="2"></textarea>
+                        <label class="form-label" for="postTextArea">Whose wall would you like to post to?</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addStatusUpdate();">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Post Card -->
+            <div class="card mb-2">
+              <div class="card-body">
+                <div class="d-flex mb-2">
+                  <a href="">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" alt="" style="height: 40px;"
+                      class="rounded-circle border mr-2">
+                  </a>
+
+                  <button class="btn btn-light btn-block btn-rounded bg-light" data-mdb-toggle="modal"
+                    data-mdb-target="#postModal">What's on your mind?</button>
+                </div>
+              </div>
+            </div>
+
+            <% if (posts.length != 0) { %>
+              <% for(var i=0; i < posts.length; i++) { %>
+                <!-- START post card -->
+                <div class="card mb-3">
+                  
+                  <div class="card-body">
+                    <div class="d-flex mb-3 mr-3">
+                      <a href="">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" alt="" style="height: 40px;"
+                          class="rounded-circle border mr-2">
+                      </a>
+      
+                      <div>
+                        <a href="" class="text-dark mb-0">
+                          <strong><%= posts[i].id.S %></strong>
+                        </a>
+                        <a href="" class="d-block text-muted" style="margin-top: -6px;">
+                          <small class="datetime"><%= posts[i].timestamp.S %></small>
+                        </a>
+                      </div>
+                    </div>
+                    <p><%= posts[i].text.S %></p>
+                  </div>
+    
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                      <a href="">
+                        <i class="fas fa-thumbs-up text-primary"></i><i class="fas fa-heart text-danger"></i>
+                        <span><%= posts[i].likes.N %></span>
+                      </a>
+    
+                      <div>
+                        <a href="" class="text-muted">8 comments</a>
+                      </div>
+                    </div>
+    
+                    <!-- Comment Modal -->
+                    <div class="modal fade" id="postCommentModal_<%= posts[i].postID.S %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Post a comment</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                              <div class="form-outline" style="width: 470px;">
+                                <textarea class="form-control" id="commentTextArea_<%= posts[i].postID.S %>" rows="2"></textarea>
+                                <label class="form-label" for="commentTextArea_<%= posts[i].postID.S %>">Write a comment</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            <button type="button" id="<%= posts[i].user_relation.S %>" class="btn btn-primary" onclick="addComment(this.id, document.getElementById('commentTextArea_<%= posts[i].postID.S %>').value);">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Comment Modal -->
+    
+                    <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
+                      <button class="btn btn-link btn-lg"><i class="fas fa-thumbs-up text-primary"></i> Like</button>
+    
+                      <button class="btn btn-link btn-lg" data-mdb-toggle="modal" data-mdb-target="#postCommentModal_<%= posts[i].postID.S %>"><i class="fas fa-comment text-primary"></i> Comment</button>
+                    </div>
+                                        
+                    <% if (posts[i].comments) { %>
+                      <!-- 1 comment -->
+                      <% for (var j = 0; j < posts[i].comments.length; j++) { %>
+                        <div class="dropdown d-flex mb-3">
+                          <a href="">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" alt="" style="height: 40px;"
+                              class="rounded-circle border mr-3">
+                          </a>
+          
+                          <div>
+                            <div class="bg-light rounded-lg px-3 py-1">
+                              <a href="" class="text-dark mb-0"><strong>John Doe</strong></a>                            
+                              <%= posts[i].comments[j][0] %>
+                            </div>
+                          </div>
+                        </div>
+                      <% } %>
+                      <!-- End 1 comment -->
+                    <% } %>
+                  </div>
+                </div>
+                <!-- END Post card -->
+              <% } %>
+            <% } %>  
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Section: Homepage -->
+
+    <!-- Section: Wall -->
+    <section id="wall-section" style="display: none;">
+      <div class="container">
+        <div class="row gx-lg-5">
+          <div class="col-md-5 mb-5 mb-lg-0">
+          </div>
+          <div class="col-md-7 mb-5 mb-lg-0">
+
+            <!-- Status update Modal -->
+            <div class="modal fade" id="wallModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Post a status update</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div>
+                      <div class="form-outline" style="width: 470px;">
+                        <textarea class="form-control" id="statusArea" rows="2"></textarea>
+                        <label class="form-label" for="statusArea">Write a status update</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Status update Card -->
+            <div class="card mb-2">
+              <div class="card-body">
+                <div class="d-flex mb-2">
+                  <a href="">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" alt="" style="height: 40px;"
+                      class="rounded-circle border mr-2">
+                  </a>
+
+                  <button class="btn btn-light btn-block btn-rounded bg-light" data-mdb-toggle="modal"
+                    data-mdb-target="#wallModal">What's on your mind?</button>
+                </div>
+              </div>
+            </div>
+
+            
+            <% if (posts.length != 0) { %>
+				<% for(var i=0; i < posts.length; i++) { %>
+				  <!-- START post card -->
+				  <div class="card mb-3">
+					
+					<div class="card-body">
+					  <div class="d-flex mb-3 mr-3">
+						<a href="">
+						  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" alt="" style="height: 40px;"
+							class="rounded-circle border mr-2">
+						</a>
+		
+						<div>
+						  <a href="" class="text-dark mb-0">
+							<strong><%= posts[i].id.S %></strong>
+						  </a>
+						  <a href="" class="d-block text-muted" style="margin-top: -6px;">
+							<small class="datetime"><%= posts[i].timestamp.S %></small>
+						  </a>
+						</div>
+					  </div>
+					  <p><%= posts[i].text.S %></p>
+					</div>
+	  
+					<div class="card-body">
+					  <div class="d-flex justify-content-between mb-3">
+						<a href="">
+						  <i class="fas fa-thumbs-up text-primary"></i><i class="fas fa-heart text-danger"></i>
+						  <span><%= posts[i].likes.N %></span>
+						</a>
+	  
+						<div>
+						  <a href="" class="text-muted">8 comments</a>
+						</div>
+					  </div>
+	  
+					  <!-- Comment Modal -->
+					  <div class="modal fade" id="postCommentModal_<%= posts[i].postID.S %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h5 class="modal-title" id="exampleModalLabel">Post a comment</h5>
+							  <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+							  <div>
+								<div class="form-outline" style="width: 470px;">
+								  <textarea class="form-control" id="commentTextArea_<%= posts[i].postID.S %>" rows="2"></textarea>
+								  <label class="form-label" for="commentTextArea_<%= posts[i].postID.S %>">Write a comment</label>
+								</div>
+							  </div>
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+							  <button type="button" id="<%= posts[i].user_relation.S %>" class="btn btn-primary" onclick="addComment(this.id, document.getElementById('commentTextArea_<%= posts[i].postID.S %>').value);">Save changes</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					  <!-- Comment Modal -->
+	  
+					  <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
+						<button class="btn btn-link btn-lg"><i class="fas fa-thumbs-up text-primary"></i> Like</button>
+	  
+						<button class="btn btn-link btn-lg" data-mdb-toggle="modal" data-mdb-target="#postCommentModal_<%= posts[i].postID.S %>"><i class="fas fa-comment text-primary"></i> Comment</button>
+					  </div>
+										  
+					  <% if (posts[i].comments) { %>
+						<!-- 1 comment -->
+						<% for (var j = 0; j < posts[i].comments.length; j++) { %>
+						  <div class="dropdown d-flex mb-3">
+							<a href="">
+							  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" alt="" style="height: 40px;"
+								class="rounded-circle border mr-3">
+							</a>
+			
+							<div>
+							  <div class="bg-light rounded-lg px-3 py-1">
+								<a href="" class="text-dark mb-0"><strong>John Doe</strong></a>                            
+								<%= posts[i].comments[j][0] %>
+							  </div>
+							</div>
+						  </div>
+						<% } %>
+						<!-- End 1 comment -->
+					  <% } %>
+					</div>
+				  </div>
+				  <!-- END Post card -->
+				<% } %>
+			<% } %>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Section: Wall -->
+
+  </main>
+
+</body>
+
+<!-- MDB -->
+<script type="text/javascript" src="../js/mdb.min.js"></script>
+<!-- Custom scripts -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    function getUsername() {
+      return JSON.parse(document.getElementById("user")).id.S;
+    }
+
+    var timelements = document.getElementsByClassName("datetime");
+    for (var i = 0; i < timelements.length; i++) {
+      var element = timelements[i];
+      var date = new Date(parseInt(element.innerText));
+      var hours = date.getHours();
+      // Minutes part from the timestamp
+      var minutes = "0" + date.getMinutes();
+      // Seconds part from the timestamp
+      var seconds = "0" + date.getSeconds();
+      element.innerHTML = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    }
+
+    var posts = JSON.parse(document.getElementById("posts").innerText);
+    console.log("posts");
+    console.log(posts);
+    console.log("user data");
+    console.log(JSON.parse(document.getElementById("user")).id.S);
+  });
+
+  function changeButton(id) {
+    document.getElementsByClassName("btn btn-link bg-light")[0].className = "btn btn-link text-reset";
+    document.getElementById(id).className = "btn btn-link bg-light";
+
+    if (id == "wall-btn") {
+      document.getElementById("homepage-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "none";
+      document.getElementById("news-section").style.display = "none";
+      document.getElementById("wall-section").style.display = "block";
+    } else if (id == "homepage-btn") {
+      document.getElementById("wall-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "none";
+      document.getElementById("news-section").style.display = "none";
+      document.getElementById("homepage-section").style.display = "block";
+    } else if (id == "friends-btn") {
+      document.getElementById("wall-section").style.display = "none";
+      document.getElementById("news-section").style.display = "none";
+      document.getElementById("homepage-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "block";
+    } else if (id == "news-btn") {
+      document.getElementById("wall-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "none";
+      document.getElementById("homepage-section").style.display = "none";
+      document.getElementById("news-section").style.display = "block";
+    }
+  }
+
+  function addStatusUpdate() {
+    var text = document.getElementById("postTextArea").value;
+
+    console.log(text);
+    $.post("/addpost",
+            { "input": text,
+              "wall": JSON.parse(document.getElementById("user").innerText).id.S },
+            function(data, status) {
+              console.log("post added");
+              window.location.reload();
+    });
+  }
+
+  function addComment(postId, text) {
+    console.log(postId);
+    console.log(text);
+    $.post("/addcomment",
+            { "postId": postId,
+              "input": text },
+            function(data, status) {
+              console.log("comment added");
+              window.location.reload();
+    });
+  }
+</script>
+
+</html>

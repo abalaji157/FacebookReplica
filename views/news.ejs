@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Homepage</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link type="text/css" rel="stylesheet" href="../css/mdb.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <style>
+    .bg-light {
+      background-color: #f0f2f5 !important;
+    }
+
+    .container {
+      max-width: 1140px;
+    }
+  </style>
+  
+  <!-- Visualizer style files -->
+  <!-- CSS Files -->
+  <link type="text/css" href="../css/base.css" rel="stylesheet" />
+
+  <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!-- JIT Library File -->
+  <script language="javascript" type="text/javascript" src="../js/jit.js"></script>
+
+  <!-- Example File -->
+  <script language="javascript" type="text/javascript" src="../js/friendvisualizer.js"></script>
+</head>
+
+<body class="bg-light">
+
+  <div id="user" style="display: none;"><%= JSON.stringify(user) %></div>
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-5">
+      <!-- Container wrapper -->
+      <div class="container-fluid justify-content-between">
+        <!-- Left elements-->
+        <div class="d-flex">
+          <a class="navbar-brand" href="#">
+            <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" height="30" alt="Facebook Logo"
+              loading="lazy" />
+          </a>
+
+          <form autocomplete="off" action="/search" method="get">
+          <div class="input-group">
+            <input type="text" id="search" name="userSearch" class="form-control rounded" placeholder="Search" aria-label="Search"
+              aria-describedby="search-addon" onKeyUp="showUsers(this.value)" />
+            <span class="input-group-text border-0" id="search-addon"><i class="fas fa-search"></i></span>
+            <button type="submit" value="Submit"> </button>
+            <div id= "searchbox"> </div>
+          </div>
+          </form>
+        </div>
+
+        <script type="text/javascript">
+        
+          function showUsers(searchTerm) {
+            box = document.getElementById("searchbox")
+            box.innerHTML = ""
+            if (searchTerm == "") {
+              return
+            }
+            var result = ""
+            fetch('/match?search=' + searchTerm).then(
+              function(res) {
+                return res.json()
+              }
+            ).then(function (arr) {
+              for (let i = 0; i < arr.length; i++) {
+                result += '<li>' + arr[i] + '</li>'
+              }
+              box.innerHTML = '<ul>' + result + '</ul>'
+              return true;
+            }).catch(function(err) {
+              console.log("error with match")
+              return false
+            })
+            box.onclick = function (click) {
+              const populate = click.target.innerText;
+              const search = document.getElementById("search")
+              search.value = populate;
+              this.innerHTML = "";
+            };
+          }
+
+        </script>
+
+        <!-- Right elements-->
+        <div>
+          <div class="container-fluid">
+            <ul class="navbar-nav d-flex flex-row">
+              <!-- Icons -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
+                  role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"
+                    height="25" alt="Profile image" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li>
+                    <a class="dropdown-item" href="/updatepage">My profile</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="/chat">
+                  <i class="fas fa-comment fa-lg"></i>
+                </a>
+              </li>
+              <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-users fa-lg"></i>
+                  <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+
+  <main>
+    <!-- Section: White background -->
+    <section class="bg-white mb-4 shadow-2">
+      <div class="container">
+        <!-- Section: Images -->
+        <section class="mb-5">
+          <!-- Background image -->
+          <div id="intro-example" class="p-5 text-center bg-image shadow-1-strong rounded-bottom"
+            style="background-image: url('https://s3.amazonaws.com/g25.profile.images/background_default.png'); height: 400px;">
+          </div>
+
+          <!-- Profile picture -->
+          <div class="d-flex justify-content-center">
+            <img src="https://s3.amazonaws.com/g25.profile.images/default_pfp.jpeg" alt=""
+              class="rounded-circle shadow-3-strong position-absolute" style="width: 168px; margin-top: -140px">
+          </div>
+        </section>
+        <!-- Section: Images -->
+
+        <!-- Section: User data -->
+        <section class="text-center border-bottom">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+              <h2><strong><%= user.firstname.S + " " + user.lastname.S %></strong></h2>
+            </div>
+          </div>
+
+        </section>
+        <!-- Section: User data -->
+
+        <!-- Section: Buttons -->
+        <section class="py-3 d-flex justify-content-between align-items-center">
+          <!-- left elements -->
+          <div id="left-buttons">
+            <button type="button" id="homepage-btn" onclick="location.href = '/home';" class="btn btn-link text-reset" data-mdb-ripple-color="dark">Homepage</button>
+            <button type="button" id="wall-btn" onclick="location.href = '/wall';" class="btn btn-link text-reset" data-mdb-ripple-color="dark">Wall</button>
+            <button type="button" id="news-btn" onclick="location.href = '/getnewspage';" class="btn btn-link bg-light" data-mdb-ripple-color="dark">News</button>
+            <button type="button" id="friends-btn" onclick="location.href = '/friends';" class="btn btn-link text-reset" data-mdb-ripple-color="dark">Friends <small
+                class="text-muted">1425</small></button>
+          </div>
+
+          <!-- Right elements -->
+          <div>
+            <form action="/updatepage">
+              <button type="submit" class="btn btn-light px-3 bg-light mr-2" data-ripple-color="dark"><i
+                class="fas fa-edit mr-1"></i>Edit profile</button>
+            </form>
+            
+          </div>
+        </section>
+        <!-- Section: Buttons -->
+      </div>
+    </section>
+    <!-- Section: White background -->
+ 
+    <!-- Section: News -->
+    <section id="news-section">
+      <div class="container">
+        <div class="input-group mb-2">
+          <div id="news feed">
+            <!-- $(document).ready(function() { 
+            getrecs()
+            }); -->
+              <form onsubmit="getrecs()">
+              <label class="form-label" for="form1">My Recommended Articles</label>
+              <input type="submit" value="Submit" onclick="false">
+            </form>
+        </div>
+          <div class="form-outline">
+            <form onsubmit="getArticles()">
+            <input type="search" id="form1" class="form-control" />
+            <label class="form-label" for="form1">Search</label>
+            <input type="submit" value="Submit" onclick="false">
+            </form>
+          </div>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div id="results"></div>
+        <div>
+            <table class="table align-middle mb-0 bg-white">
+                <tbody id="result1">
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <script type="text/javascript">
+
+          function getArticles(searchTerm) {
+            box = document.getElementById("results")
+            box.innerHTML = ""
+            if (searchTerm == "") {
+              return
+            }
+            var result = ""
+            fetch('/news?search=' + document.getElementById("form1").value).then(
+              function(res) {
+                return res.json()
+              }
+            ).then(function (arr) {
+              for (let i = 0; i < arr.length; i++) {
+                console.log(arr[i].link)
+                result += `
+                    <tr>
+                    <td>
+                    <div class='d-flex align-items-center'>
+                        <div class='ms-3'>
+                        <p class='fw-bold mb-1'><a href='${arr[i].link}'>${arr[i].headline}</a></p>
+                        <p class='text-muted mb-0'>${arr[i].authors}</p>
+                        </div>
+                    </div>
+                    </td>
+                    <td>
+                    </td>
+                    </td>
+                </tr>
+                `
+              }
+              box.innerHTML = result
+              return true;
+            }).catch(function(err) {
+              console.log("error with match")
+              return false
+            })
+            event.preventDefault();
+            
+          }
+        </script>
+        
+        <script type="text/javascript">
+          function getrecs(){
+            // console.log("func called")
+            recs = document.getElementById("news feed")
+            recs.innerHTML = ""
+            var result = ""
+            fetch('/newsrec').then(
+              function(res) {
+                return res.json()
+              }
+            ).then(function (arr) {
+              // console.log(arr)
+              for (let i = 0; i < arr.length; i++) {
+                var split = arr[i].split(",:")
+                result += '<li>' + split[0] + ', ' + split[1] + ', ' + split[2] + ' :' + split[3] + '</li>'
+                console.log(result)
+              }
+              recs.innerHTML = '<ul>' + result + '</ul>'
+              return true;
+            }).catch(function(err) {
+              console.log("error with match")
+              return false
+            })
+            recs.onclick = function (click) {
+              const populate = click.target.innerText;
+              console.log("populate: " + populate)
+              fetch('/article?like=' + populate).then(
+                function(res) {
+                  return res.json()
+                }
+              ).catch(function(err) {
+                console.log("error with like article")
+                return false
+              })
+              // call routes from here
+              // console.log(populate)
+            };
+            event.preventDefault();
+          }
+        </script>
+        
+      </div>
+      
+    </section>
+    <!-- Section: News -->
+
+  </main>
+
+</body>
+
+<!-- MDB -->
+<script type="text/javascript" src="../js/mdb.min.js"></script>
+<!-- Custom scripts -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    function getUsername() {
+      return JSON.parse(document.getElementById("user")).id.S;
+    }
+
+    var timelements = document.getElementsByClassName("datetime");
+    for (var i = 0; i < timelements.length; i++) {
+      var element = timelements[i];
+      var date = new Date(parseInt(element.innerText));
+      var hours = date.getHours();
+      // Minutes part from the timestamp
+      var minutes = "0" + date.getMinutes();
+      // Seconds part from the timestamp
+      var seconds = "0" + date.getSeconds();
+      element.innerHTML = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    }
+
+    var posts = JSON.parse(document.getElementById("posts").innerText);
+    console.log("posts");
+    console.log(posts);
+    console.log("user data");
+    console.log(JSON.parse(document.getElementById("user")).id.S);
+  });
+
+  function changeButton(id) {
+    document.getElementsByClassName("btn btn-link bg-light")[0].className = "btn btn-link text-reset";
+    document.getElementById(id).className = "btn btn-link bg-light";
+
+    if (id == "wall-btn") {
+      document.getElementById("homepage-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "none";
+      document.getElementById("news-section").style.display = "none";
+      document.getElementById("wall-section").style.display = "block";
+    } else if (id == "homepage-btn") {
+      document.getElementById("wall-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "none";
+      document.getElementById("news-section").style.display = "none";
+      document.getElementById("homepage-section").style.display = "block";
+    } else if (id == "friends-btn") {
+      document.getElementById("wall-section").style.display = "none";
+      document.getElementById("news-section").style.display = "none";
+      document.getElementById("homepage-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "block";
+    } else if (id == "news-btn") {
+      document.getElementById("wall-section").style.display = "none";
+      document.getElementById("friends-section").style.display = "none";
+      document.getElementById("homepage-section").style.display = "none";
+      document.getElementById("news-section").style.display = "block";
+    }
+  }
+
+  function toggleFriends() {
+    var graph = document.getElementById("container");
+    var table = document.getElementById("friends-table");
+
+    if (graph.style.display == "none") {
+      graph.style.display = "block";
+      table.style.display = "none";
+    } else if (table.style.display == "none") {
+      table.style.display = "block";
+      graph.style.display = "none";
+    }
+  }
+
+  function addPost() {
+    var text = document.getElementById("postTextArea").value;
+    console.log(text);
+    $.post("/addpost",
+            { "input": text,
+              "wall": JSON.parse(document.getElementById("user").innerText).id.S },
+            function(data, status) {
+              console.log("post added");
+              window.location.reload();
+    });
+  }
+
+  function addComment(postId, text) {
+    console.log(postId);
+    console.log(text);
+    $.post("/addcomment",
+            { "postId": postId,
+              "input": text },
+            function(data, status) {
+              console.log("comment added");
+              window.location.reload();
+    });
+  }
+
+  function likePost(postId) {
+    var id = postId.split("_")[1];
+    console.log(id);
+    $.post("/likepost",
+            { "postId": id },
+            function(data, status) {
+              console.log("post liked");
+              console.log(id);
+              console.log(document.getElementById("likes_" + id).value);
+              document.getElementById("likes_" + id).innerText = parseInt(document.getElementById("likes_" + id).innerText) + 1;
+              document.getElementById("button_" + id).disabled = true;
+              document.getElementById("button_" + id).innerText = "Liked";
+    });
+  }
+</script>
+
+</html>

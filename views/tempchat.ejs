@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <link rel = "stylesheet"
+        href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <style type = "text/css">
+        body {
+          padding-top: 40px; 
+          padding-bottom: 40px; 
+          background-color: grey; 
+        }
+        .name {
+          max-width: 330px;
+          margin: 300 auto; 
+        }
+        .br {
+            display: block;
+            margin-bottom: 0em;
+            font-size: larger;
+        }
+        .h1 {
+          font-size: large;
+        }
+     </style>   
+    <h1>Invite A Friend</h1>
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <form action="/checkChat" method="post">
+      <input type="text" name="friend" placeholder="Enter Friend..">
+      <input type="submit" value="Invite">
+    </form>
+    
+    <h1>Current Chats</h1>
+    
+    <% for (chat of chats) { %>
+      
+      <br id = "br"/> Chat
+      <form action = "/enterChat" method = "post"> 
+        <button type = "submit" name = "name" value = '<%= chat %>' id = "id" class = "btn btn-primary">Enter Chat</button>
+      </form>
+    <% } %>
+
+
+
+    <h1>Current Private Chat Invites</h1>
+    <% for (invite of invites) { %>
+      <br/>  <%= invite %> 
+      <form action = "/enterChat" method = "post"> 
+        <button type = "submit" name = "inviteAccept" value = '<%= invite %>'  class="btn btn-success">Accept</button>
+        <button type="submit" name = "inviteReject" value = '<%= invite %>' class="btn btn-danger">Reject</button>
+        <input type="hidden" id = "inviter" ><br></br>
+      </form>
+      
+    <% } %>
+
+    <h1>Group Chat Invites</h1>
+    
+    <script> 
+      var array = '<%=groupIDs%>';
+      console.log(array);
+      array.split(',');
+      console.log(4);
+      var newar = '<%=groupInviters%>';
+      newar = newar.split(',');
+      console.log(newar);
+    </script>
+
+    <%
+    for (let i = 0; i < groupIDs.length; i++) { %>
+      
+      <li><p><%- groupInviters[i] -%></p></li>
+      <form action = "/groupInvite" method = "get"> 
+        <button type = "submit" name = "accept" value = '<%- groupInviters[i] -%>,<%- groupIDs[i] -%>' class = "btn btn-success">Accept</button>
+        <button type = "submit" name = "reject" value = "true" class = "btn btn-danger">Reject</button>
+      </form>
+    <% } %>
+</body>
+
+</html>
+
